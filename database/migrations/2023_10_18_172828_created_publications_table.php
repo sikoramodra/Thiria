@@ -12,15 +12,13 @@ return new class extends Migration {
      */
     public function up() {
         Schema::create(
-            'user', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        }
+            'publication', function (Blueprint $table) {
+                $table->id();
+                $table->string('title'); // string to VARCHAR z języka SQL.
+                $table->text('content');
+                $table->string('author');
+                $table->timestamps();
+            }
         );
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('user');
+        Schema::dropIfExists('publication');
     }
 };
