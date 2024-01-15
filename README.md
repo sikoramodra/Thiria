@@ -30,7 +30,7 @@ Go to the project directory
 Create proper `.env` file
 
 ```bash
-  mv .env.sample .env
+  cp .env.sample .env
 ```
 
 Install dependencies
