@@ -9,9 +9,9 @@
     <form action="{{ route('auth.login') }}" method="post" class="m-24">
         @csrf
 
-        <label for="name" class="block mb-2 text-sm font-medium mt-8">Username</label>
-        <input type="text" id="name" name="name" value="{{ old('name') }}" class="border border-dark-400 text-dark-100 text-sm rounded-lg focus:border-blue-100 block w-full p-2.5 dark:bg-dark-200 dark:border-dark-400 dark:placeholder-dark-500 dark:text-white dark:focus:border-blue-100 outline-0" placeholder="Username">
-        @error('name')
+        <label for="email" class="block mb-2 text-sm font-medium mt-8">Email</label>
+        <input type="text" id="email" name="email" value="{{ old('email') }}" class="border border-dark-400 text-dark-100 text-sm rounded-lg focus:border-blue-100 block w-full p-2.5 dark:bg-dark-200 dark:border-dark-400 dark:placeholder-dark-500 dark:text-white dark:focus:border-blue-100 outline-0" placeholder="E-mail">
+        @error('email')
         <p class="text-red-100 text-xs italic">{{ $message }}</p>
         @enderror
 

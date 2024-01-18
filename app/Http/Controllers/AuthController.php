@@ -12,14 +12,14 @@ class AuthController extends Controller {
     }
 
     public function login(LoginRequest $request) {
-        $credentials = $request->only('name', 'password');
+        $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials, $request->boolean('remember_me'))) {
             $request->session()->regenerate();
 
             return redirect()->intended('/');
         }
-        return back()->withErrors(['name' => 'Incorrect username or password']);
+        return back()->withErrors(['email' => 'Incorrect username or password']);
     }
 
    public function logout(Request $request) {
