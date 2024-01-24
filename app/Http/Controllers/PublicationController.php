@@ -17,7 +17,7 @@ class PublicationController extends Controller {
     public function show(Publication $publication) {
         return view(
             'publication.show',
-            ['publication' => $publication, 'comments' => $publication->comments]
+            ['publication' => $publication, 'comments' => $publication->comments()->withTrashed()->get()]
         );
     }
 

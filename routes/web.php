@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PublicationController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -35,3 +36,6 @@ Route::put('/publications/{publication}', [PublicationController::class, 'update
 
 Route::delete('/publications/{publication}', [PublicationController::class, 'destroy'])
     ->name('publication.destroy');
+
+Route::post('/comment/add', [CommentController::class, 'store'])->name('comment.store')->middleware('auth');
+Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.delete');
