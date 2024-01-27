@@ -16,18 +16,20 @@ class AuthController extends Controller {
 
         if (Auth::attempt($credentials, $request->boolean('remember_me'))) {
             $request->session()->regenerate();
-
-            return redirect()->intended('/');
+            return redirect()->intended();
         }
-        return back()->withErrors(['email' => 'Incorrect username or password']);
+
+        return back()->withErrors(
+            ['email' => 'Incorrect email or password']
+        );
     }
 
-   public function logout(Request $request) {
-       Auth::logout();
+    public function logout(Request $request) {
+        Auth::logout();
 
-       $request->session()->invalidate();
-       $request->session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-       return redirect('/')->with('success', 'Successfully logged out');
-   }
+        return redirect('/')->with('success', 'Successfully logged out');
+    }
 }

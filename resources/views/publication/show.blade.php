@@ -5,27 +5,27 @@
 @section('content')
 
     <script>
-        function setRespond(a,b){
-            var parent=document.getElementById('parent_id');
-            var label=document.getElementById('comment_label');
-            var cancel=document.getElementById('cancel_respond');
-            var button=document.getElementById('submit_button');
+        const setRespond = (a,b) => {
+            let parent = document.getElementById('parent_id');
+            let label = document.getElementById('comment_label');
+            let cancel = document.getElementById('cancel_respond');
+            let button = document.getElementById('submit_button');
 
             parent.value = a;
-            label.textContent = "Responding to "+b;
-            cancel.style.display='block';
-            button.textContent='Respond';
+            label.textContent = 'Responding to ' + b;
+            cancel.style.display = 'block';
+            button.textContent = 'Respond';
         }
-        function cancelRespond(){
-            var parent=document.getElementById('parent_id');
-            var label=document.getElementById('comment_label');
-            var cancel=document.getElementById('cancel_respond');
-            var button=document.getElementById('submit_button');
+        const cancelRespond = () => {
+            let parent = document.getElementById('parent_id');
+            let label = document.getElementById('comment_label');
+            let cancel = document.getElementById('cancel_respond');
+            let button = document.getElementById('submit_button');
 
             parent.value = '';
-            label.textContent = "Comment";
-            cancel.style.display='none';
-            button.textContent='Comment';
+            label.textContent = 'Comment';
+            cancel.style.display = 'none';
+            button.textContent = 'Comment';
         }
     </script>
 
@@ -56,16 +56,16 @@
         </div>
 
         <div>
-            <form action="{{ route('comment.store') }}" method="post">
+            <form action="{{ route('comment.add') }}" method="post" class="flex flex-col gap-2">
                 @csrf
                 <h3 id="comment_label">Comment</h3>
 
                 <input type="hidden" name="publication_id" value="{{ $publication->id }}">
                 <input type="hidden" id="parent_id" name="parent_id" value="">
-                <textarea id="content" name="content" rows="4" class="bg-blue-500" placeholder="Write your thoughts here..."></textarea>
-                <button type="submit" id="submit_button" class="w-24 text-white bg-blue-500 hover:bg-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-400 mt-2">Comment</button>
+                <textarea id="content" name="content" rows="5" cols="50" class="bg-dark-200 rounded-xl p-2" placeholder="Write your thoughts here..."></textarea>
+                <button type="submit" id="submit_button" class="w-24 text-white bg-blue-500 hover:bg-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-400">Comment</button>
             </form>
-            <button id="cancel_respond" style="display: none;" class="w-24 text-white bg-blue-500 hover:bg-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-400 mt-2" onclick="cancelRespond()">X</button>
+            <button id="cancel_respond" style="display: none;" class="w-24 text-white bg-blue-500 hover:bg-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-400 mt-2 flex justify-center" onclick="cancelRespond()"><i data-feather="x"></i></button>
         </div>
 
         <div>
@@ -86,7 +86,7 @@
                         </p>
 
                         <button class="w-20 text-white bg-green-500 hover:bg-green-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-500 dark:hover:bg-green-400" onclick="setRespond({{$comment->id}},'{{ $comment->author->name }}')">Respond</button>
-                        
+
                         <form action="{{ route('comment.delete', ['comment' => $comment]) }}" method="post">
                             @csrf
                             @method('DELETE')
@@ -94,30 +94,26 @@
                         </form>
                         @foreach ($comments as $respond)
                             @if($respond->parent_id==$comment->id)
-                                <div class="p-4 my-4 bg-white rounded-lg shadow dark:bg-dark-100 ">
-                                    <div class="flex mb-4 ml-4 bg-white border border-dark-500 dark:bg-dark-100 dark:border-dark-200">
-                                        <i data-feather="user" class="h-10 w-auto border-2 rounded-lg mr-2"></i>
-                                        <div class="flex flex-col">
-                                            <p class="text-sm font-bold">{{ $comment->author->name }}</p>
-                                            <p class="text-sm dark:text-dark-500">{{ $comment->updated_at }}</p>
+                                    <div class="my-4 p-4 rounded-lg ml-4 bg-white border border-dark-500 dark:bg-dark-100 dark:border-dark-200">
+                                        <div class="flex mb-4">
+                                            <i data-feather="user" class="h-10 w-auto border-2 rounded-lg mr-2"></i>
+                                            <div class="flex flex-col">
+                                                <p class="text-sm font-bold">{{ $comment->author->name }}</p>
+                                                <p class="text-sm dark:text-dark-500">{{ $comment->updated_at }}</p>
+                                            </div>
+                                            <i data-feather="more-horizontal" class="cursor-pointer ml-auto"></i>
                                         </div>
+
                                         <p class="text-md dark:text-dark-500">
                                             {{ $respond->content }}
                                         </p>
-                                        <i data-feather="more-horizontal" class="cursor-pointer ml-auto"></i>
                                     </div>
-                                </div>
                             @endif
                         @endforeach
 
                     </div>
                 @elseif (!isset($comment->parent_id))
                     <div class="p-4 my-4 bg-white border border-dark-500 rounded-lg shadow dark:bg-dark-100 dark:border-dark-200 ">
-                        <div class="flex mb-4">
-                            <i data-feather="user" class="h-10 w-auto border-2 rounded-lg mr-2"></i>
-                            <i data-feather="more-horizontal" class="cursor-pointer ml-auto"></i>
-                        </div>
-
                         <p class="text-md dark:text-dark-500">
                             [deleted]
                         </p>

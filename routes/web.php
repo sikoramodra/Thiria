@@ -37,5 +37,7 @@ Route::put('/publications/{publication}', [PublicationController::class, 'update
 Route::delete('/publications/{publication}', [PublicationController::class, 'destroy'])
     ->name('publication.destroy');
 
-Route::post('/comment/add', [CommentController::class, 'store'])->name('comment.store')->middleware('auth');
-Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.delete');
+Route::post('/comment/add', [CommentController::class, 'add'])
+    ->name('comment.add')->middleware('auth');
+Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])
+    ->name('comment.delete');

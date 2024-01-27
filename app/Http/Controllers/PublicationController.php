@@ -15,26 +15,27 @@ class PublicationController extends Controller {
     }
 
     public function show(Publication $publication) {
-        return view(
-            'publication.show',
-            ['publication' => $publication, 'comments' => $publication->comments()->withTrashed()->get()]
+        return view('publication.show',
+            [
+                'publication' => $publication,
+                'comments' => $publication->comments()->withTrashed()->get()
+            ]
         );
     }
 
     public function create() {
         $users = User::all();
-
         return view('publication.form', ['authors' => $users]);
     }
 
     public function add(StorePublicationRequest $request) {
         $data = $request->validated();
 
-        $newP = new Publication($data);
-        $newP->save();
+        $newPublication = new Publication($data);
+        $newPublication->save();
 
         return redirect()->route(
-            'publication.show', $newP
+            'publication.show', $newPublication
         )->with('success', 'Successfully added');
     }
 
@@ -67,5 +68,4 @@ class PublicationController extends Controller {
             'publication.index'
         )->with('success', 'Successfully deleted');
     }
-
 }

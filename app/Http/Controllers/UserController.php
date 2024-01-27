@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
@@ -23,6 +24,8 @@ class UserController extends Controller {
         $newUser = new User($data);
         $newUser->password = Hash::make(($data['password']));
         $newUser->save();
+
+        Auth::login($newUser);
 
         return redirect()->route(
             'site.home'
