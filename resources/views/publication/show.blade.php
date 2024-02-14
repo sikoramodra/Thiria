@@ -43,17 +43,24 @@
         <h2 class="font-bold text-3xl ">{{ $publication->title }}</h2>
         <p class="text-xl dark:text-dark-500">{{ $publication->content }}</p>
 
-        <div class="my-12 flex gap-4">
-            <a href="{{ route('publication.edit', ['publication' => $publication]) }}">
-                <button type="submit" class="w-20 text-white bg-blue-500 hover:bg-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-400">Edit</button>
-            </a>
+        @auth
+            @if (Auth::id()==$publication->author->id)
+                <div class="my-12 flex gap-4">
+                    <a href="{{ route('publication.edit', ['publication' => $publication]) }}">
+                        <button type="submit" class="w-20 text-white bg-blue-500 hover:bg-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-400">Edit</button>
+                    </a>
+        
+                    <form action="{{ route('publication.destroy', ['publication' => $publication]) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button class="w-20 text-white bg-blue-500 hover:bg-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-400">Delete</button>
+                    </form>
+                </div>     
+            @endif    
 
-            <form action="{{ route('publication.destroy', ['publication' => $publication]) }}" method="post">
-                @csrf
-                @method('DELETE')
-                <button class="w-20 text-white bg-blue-500 hover:bg-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-400">Delete</button>
-            </form>
-        </div>
+        @endauth
+
+        
 
         <div>
             <form action="{{ route('comment.add') }}" method="post" class="flex flex-col gap-2">

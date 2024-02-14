@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Models\Publication;
+use App\Policies\PublicationPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Publication::class => PublicationPolicy::class,
     ];
 
     /**
@@ -22,5 +24,16 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        Gate::define('admin-access', function () {
+            
+            $password = request()->query('secret');
+
+            if($password==="123456"){
+                return true;
+            }
+            else{
+                return false;
+            }
+        });
     }
 }

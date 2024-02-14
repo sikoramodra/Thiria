@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Gate;
 
 Route::get('/', [SiteController::class, 'home'])->name('site.home');
 Route::get('/about-us', [SiteController::class, 'about'])->name('site.about_us');
@@ -41,3 +42,12 @@ Route::post('/comment/add', [CommentController::class, 'add'])
     ->name('comment.add')->middleware('auth');
 Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])
     ->name('comment.delete');
+
+    
+    Route::get('admin', function () {
+        if (Gate::denies('admin-access')) {
+            abort(403);
+        }
+    
+        echo 'Panel administratora';
+    })->name('admin-panel');
