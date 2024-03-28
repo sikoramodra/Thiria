@@ -4,11 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     protected $table = 'user';
 
@@ -43,5 +45,17 @@ class User extends Authenticatable {
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function creatures(): HasMany {
+        return $this->hasMany(Creature::class, 'user_id');
+    }
+
+    public function comments(): HasMany {
+        return $this->hasMany(Comment::class, 'user_id');
+    }
+
+    public function votes(): HasMany {
+        return $this->hasMany(Vote::class, 'user_id');
     }
 }
