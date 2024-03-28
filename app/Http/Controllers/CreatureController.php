@@ -11,7 +11,7 @@ class CreatureController extends Controller {
     }
 
     public function view_show(Creature $creature): View {
-        return view('creature.show');
+        return view('creature.show', ['creature' => $creature]);
     }
 
     public function view_add(): View {
@@ -19,6 +19,6 @@ class CreatureController extends Controller {
     }
 
     public function view_edit(Creature $creature): View {
-        return view('creature.edit');
+        return view('creature.edit', ['creature' => $creature]);
     }
 }
