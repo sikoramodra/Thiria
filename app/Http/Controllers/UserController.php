@@ -25,7 +25,7 @@ class UserController extends Controller {
 
         Auth::login($newUser);
 
-        return redirect()->route('site.home')
+        return redirect()->route('site.view_home')
                          ->with('success', 'Successfully registered');
     }
 
@@ -50,7 +50,7 @@ class UserController extends Controller {
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('site.home')
+        return redirect()->route('site.view_home')
                          ->with('success', 'Successfully logged out');
     }
 
