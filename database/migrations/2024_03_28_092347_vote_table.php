@@ -11,8 +11,10 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('vote', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('user');
-            $table->foreignId('creature_id')->references('id')->on('creature');
+            $table->foreignId('user_id')->references('id')
+                  ->on('user')->onDelete('cascade');
+            $table->foreignId('creature_id')->references('id')
+                  ->on('creature')->onDelete('cascade');
             $table->enum('vote', ['upvote', 'downvote']);
         });
     }

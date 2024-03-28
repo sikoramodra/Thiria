@@ -11,7 +11,8 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('creature', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('user');
+            $table->foreignId('user_id')->references('id')
+                  ->on('user')->onDelete('cascade');
             $table->string('name');
             $table->text('description');
             $table->jsonb('statblock')->nullable();

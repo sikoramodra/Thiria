@@ -11,10 +11,12 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('comment', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('comment_id')->nullable()
-                  ->references('id')->on('comment');
-            $table->foreignId('user_id')->references('id')->on('user');
-            $table->foreignId('creature_id')->references('id')->on('creature');
+            $table->foreignId('comment_id')->nullable()->references('id')
+                  ->on('comment')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')
+                  ->on('user')->onDelete('cascade');
+            $table->foreignId('creature_id')->references('id')
+                  ->on('creature')->onDelete('cascade');
             $table->text('text');
             $table->timestamp('added_at');
         });
