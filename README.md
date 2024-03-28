@@ -49,7 +49,7 @@ Generate keys
 Migrate the database
 
 ```bash
-  php artisan migrate
+  php artisan migrate:fresh --seed
 ```
 
 Run the project
