@@ -15,14 +15,18 @@ Route::get('/users/register', [UserController::class, 'view_register'])
 Route::get('/users/login', [UserController::class, 'view_login'])
     ->name('user.view_login');
 Route::get('/users/{user}', [UserController::class, 'view_show'])
-    ->name('user.view_show'); // stats + change password
+    ->name('user.view_show');
 
 Route::post('/users/register', [UserController::class, 'register'])
     ->name('user.register');
 Route::post('/users/login', [UserController::class, 'login'])
-     ->name('user.login');
+    ->name('user.login');
 Route::post('/users/logout', [UserController::class, 'logout'])
-     ->name('user.logout');
+    ->name('user.logout');
+Route::put('/users/{user}', [UserController::class, 'update'])
+    ->name('user.update');
+Route::delete('/users/{user}', [UserController::class, 'delete'])
+     ->name('user.delete');
 
 Route::get('/creatures', [CreatureController::class, 'view_list'])
     ->name('creatures.view_list');

@@ -4,11 +4,15 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property string $name
+ */
 class User extends Authenticatable {
     use HasFactory, Notifiable, SoftDeletes;
 
@@ -57,5 +61,9 @@ class User extends Authenticatable {
 
     public function votes(): HasMany {
         return $this->hasMany(Vote::class, 'user_id');
+    }
+
+    public function admin(): BelongsTo {
+        return $this->belongsTo(Admin::class, 'id');
     }
 }
