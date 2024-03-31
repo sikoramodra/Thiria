@@ -24,15 +24,19 @@ Route::post('/users/login', [UserController::class, 'login'])
 Route::post('/users/logout', [UserController::class, 'logout'])
     ->name('user.logout');
 Route::put('/users/{user}', [UserController::class, 'update'])
-    ->name('user.update');
+    ->name('user.update')->middleware('auth');
 Route::delete('/users/{user}', [UserController::class, 'delete'])
-     ->name('user.delete');
+     ->name('user.delete')->middleware('auth');
 
 Route::get('/creatures', [CreatureController::class, 'view_list'])
-    ->name('creatures.view_list');
-Route::get('/creatures/{creature}', [CreatureController::class, 'view_show'])
-    ->name('creatures.view_show');
+    ->name('creature.view_list');
 Route::get('/creatures/add', [CreatureController::class, 'view_add'])
-    ->name('creatures.view_add');
+     ->name('creature.view_add')->middleware('auth');
+Route::get('/creatures/{creature}', [CreatureController::class, 'view_show'])
+    ->name('creature.view_show');
 Route::get('/creatures/{creature}/edit', [CreatureController::class, 'view_edit'])
-    ->name('creatures.view_edit');
+    ->name('creature.view_edit')->middleware('auth');
+
+// CRUD creatures
+// add, remove votes
+// create, update, delete comments

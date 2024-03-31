@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Creature;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Gate;
 
 class CreatureController extends Controller {
     public function view_list(): View {
@@ -22,3 +23,5 @@ class CreatureController extends Controller {
         return view('creature.edit', ['creature' => $creature]);
     }
 }
+
+// Gate::authorize('own', $creature);
