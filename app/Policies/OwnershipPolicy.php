@@ -15,6 +15,6 @@ class OwnershipPolicy {
     }
 
     public function own(?User $user, Creature|Comment $item): bool {
-        return !is_null($user) && $user->id === $item->user->id;
+        return !is_null($user) && ($user->id === $item->user->id || $user->isAdmin());
     }
 }
