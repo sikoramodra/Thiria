@@ -3,6 +3,7 @@
 use App\Http\Controllers\CreatureController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SiteController::class, 'view_home'])
@@ -38,5 +39,12 @@ Route::get('/creatures/{creature}/edit', [CreatureController::class, 'view_edit'
     ->name('creature.view_edit')->middleware('auth');
 
 // CRUD creatures
-// add, remove votes
-// create, update, delete comments
+
+Route::post('/votes/add', [VoteController::class, 'add'])
+    ->name('vote.add')->middleware('auth');
+Route::delete('/votes/{vote}', [VoteController::class, 'delete'])
+    ->name('vote.delete')->middleware('auth');
+
+Route::post('/comments/add');
+Route::put('/comments/{comment}/edit');
+Route::delete('/comments/{comment}');

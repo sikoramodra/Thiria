@@ -80,11 +80,7 @@ class UserController extends Controller {
     }
 
     public function delete(User $user): RedirectResponse {
-        try {
-            Gate::authorize('own', $user);
-        } catch (AuthorizationException $e) {
-            abort(403, $e);
-        }
+        abort_if($user->id !== Auth::id() && !$user->isAdmin(), 403);
 
         $user->delete();
 
