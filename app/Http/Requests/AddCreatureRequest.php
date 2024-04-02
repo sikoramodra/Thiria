@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddCommentRequest extends FormRequest {
+class AddCreatureRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -20,9 +20,10 @@ class AddCommentRequest extends FormRequest {
      */
     public function rules(): array {
         return [
-            'text'        => ['required', 'string', 'max:250'],
-            'creature_id' => ['required', 'exists:creature,id'],
-            'comment_id'  => ['nullable', 'exists:comments,id'],
+            'name'        => ['required', 'string', 'min:3', 'max:50'],
+            'description' => ['required', 'string', 'min:10', 'max:5000'],
+            'statblock'   => ['nullable'],
+            'user_id'     => ['required', 'exists:user,id'],
         ];
     }
 }

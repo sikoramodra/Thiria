@@ -39,7 +39,12 @@ Route::get('/creatures/{creature}', [CreatureController::class, 'view_show'])
 Route::get('/creatures/{creature}/edit', [CreatureController::class, 'view_edit'])
     ->name('creature.view_edit')->middleware('auth');
 
-// CRUD creatures
+Route::post('/creatures/add', [CreatureController::class, 'add'])
+    ->name('creature.add')->middleware('auth');
+Route::put('/creatures/{creature}/edit', [CreatureController::class, 'edit'])
+    ->name('creature.edit')->middleware('auth');
+Route::delete('/creatures/{creature}', [CreatureController::class, 'delete'])
+    ->name('creature.delete')->middleware('auth');
 
 Route::post('/votes/add', [VoteController::class, 'add'])
     ->name('vote.add')->middleware('auth');

@@ -21,7 +21,7 @@ class AddVoteRequest extends FormRequest {
     public function rules(): array {
         return [
             'creature_id' => ['required'],
-            'vote' => ['required', 'in:upvote,downvote'],
+            'vote'        => ['required', 'in:upvote,downvote'],
         ];
     }
 }

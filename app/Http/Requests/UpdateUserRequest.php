@@ -22,7 +22,7 @@ class UpdateUserRequest extends FormRequest {
     public function rules(): array {
         return [
             'current_password' => ['required', 'string', 'min:6'],
-            'new_password' => [
+            'new_password'     => [
                 'required', 'string', 'min:6', 'confirmed',
                 Password::min(6)->numbers()->mixedCase()
             ],
