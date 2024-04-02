@@ -3,5 +3,13 @@
 @section('title', 'Home')
 
 @section('content')
-    Hello World
+    @auth
+    <a href="{{ route('user.view_show', ['user' => Auth::user()]) }}">{{ Auth::user()->name }}</a>
+    <form action="{{ route('user.logout') }}" method="post">
+        @csrf
+        <input type="submit" value="logout" />
+    </form>
+    @else
+    <a href="{{ route('user.view_login') }}">login</a>
+    @endauth
 @endsection

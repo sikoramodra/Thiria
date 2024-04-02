@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -25,7 +26,7 @@ class UserController extends Controller {
 
         Auth::login($newUser);
 
-        return redirect()->route('site.home')
+        return redirect()->route('site.view_home')
                          ->with('success', 'Successfully registered');
     }
 
@@ -50,11 +51,38 @@ class UserController extends Controller {
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('site.home')
+        return redirect()->route('site.view_home')
                          ->with('success', 'Successfully logged out');
     }
 
     public function view_show(User $user): View {
         return view('user.show', ['user' => $user]);
+    }
+
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse {
+        $data = $request->validated();
+
+        if (Auth::attempt([
+            'name' => $user->name,
+            'password' => $data['current_password']])
+        ) {
+            $user->forceFill([
+                'password' => Hash::make($data['new_password'])
+            ]);
+            $user->save();
+            return redirect()->route('site.view_home')
+                             ->with('success', 'Password successfully updated');
+        }
+
+        return back()->withErrors('error', 'Incorrect password');
+    }
+
+    public function delete(User $user): RedirectResponse {
+        abort_if($user->id !== Auth::id() && !$user->isAdmin(), 403);
+
+        $user->delete();
+
+        return redirect()->route('site.view_home')
+                         ->with('success', 'Successfully deleted');
     }
 }
