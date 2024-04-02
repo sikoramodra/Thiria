@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CreatureController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
@@ -45,6 +46,7 @@ Route::post('/votes/add', [VoteController::class, 'add'])
 Route::delete('/votes/{vote}', [VoteController::class, 'delete'])
     ->name('vote.delete')->middleware('auth');
 
-Route::post('/comments/add');
-Route::put('/comments/{comment}/edit');
-Route::delete('/comments/{comment}');
+Route::post('/comments/add', [CommentController::class, 'add'])
+    ->name('comment.add')->middleware('auth');
+Route::delete('/comments/{comment}', [CommentController::class, 'delete'])
+    ->name('comment.delete')->middleware('auth');
