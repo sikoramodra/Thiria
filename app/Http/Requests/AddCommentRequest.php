@@ -22,7 +22,7 @@ class AddCommentRequest extends FormRequest {
         return [
             'text'        => ['required', 'string', 'max:250'],
             'creature_id' => ['required', 'exists:creature,id'],
-            'comment_id'  => ['nullable', 'exists:comments,id'],
+            'comment_id'  => ['nullable', 'exists:comment,id'],
         ];
     }
 }

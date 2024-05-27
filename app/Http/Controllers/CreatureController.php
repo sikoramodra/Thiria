@@ -4,18 +4,39 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddCreatureRequest;
 use App\Models\Creature;
+use App\Models\Comment;
+use App\Models\Vote;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class CreatureController extends Controller {
     public function view_list(): View {
-        return view('creature.list');
+        $creatures=Creature::all();
+        $votes = Vote::all();
+
+        return view('creature.list', ['creatures' => $creatures]);
     }
 
     public function view_show(Creature $creature): View {
-        return view('creature.show', ['creature' => $creature]);
+        $comments = Comment::withTrashed()->where('creature_id', $creature->id)->get();
+        $upvotes = Vote::where('creature_id', $creature->id)->where('vote', 'upvote')->count();
+        $downvotes = Vote::where('creature_id', $creature->id)->where('vote', 'downvote')->count();
+
+        $uservote = Vote::where('creature_id', $creature->id)
+                    ->where('user_id', Auth::id())
+                    ->first();
+
+        $vote_type = $vote_type = $uservote ? $uservote->vote : null;
+
+        return view('creature.show', ['creature' => $creature,
+                                    'comments'=>$comments,
+                                    'upvotes'=>$upvotes,
+                                    'downvotes'=>$downvotes,
+                                    'uservote'=>$uservote,
+                                    'vote_type'=>$vote_type]);
     }
 
     public function view_add(): View {
@@ -24,6 +45,8 @@ class CreatureController extends Controller {
 
     public function add(AddCreatureRequest $request): RedirectResponse {
         $data = $request->validated();
+        $data['user_id'] = Auth::id();
+
 
         $newCreature = new Creature($data);
         $newCreature->save();
@@ -34,7 +57,7 @@ class CreatureController extends Controller {
     }
 
     public function view_edit(Creature $creature): View {
-        return view('creature.edit', ['creature' => $creature]);
+        return view('creature.add', ['creature' => $creature]);
     }
 
     public function edit(
@@ -48,6 +71,7 @@ class CreatureController extends Controller {
         }
 
         $data = $request->validated();
+        $data['user_id'] = Auth::id();
         $creature->fill($data);
         $creature->save();
 

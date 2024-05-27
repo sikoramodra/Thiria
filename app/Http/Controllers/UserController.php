@@ -6,6 +6,8 @@ use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use App\Models\Creature;
+use App\Models\Vote;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -35,14 +37,14 @@ class UserController extends Controller {
     }
 
     public function login(LoginUserRequest $request): RedirectResponse {
-        $credentials = $request->only('name', 'password');
+        $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended();
         }
 
-        return back()->withErrors('error', 'Incorrect username or password');
+        return back()->withErrors('error', 'Incorrect email or password');
     }
 
     public function logout(Request $request): RedirectResponse {
@@ -56,14 +58,17 @@ class UserController extends Controller {
     }
 
     public function view_show(User $user): View {
-        return view('user.show', ['user' => $user]);
+        $creatures = $user->creatures;
+        //$votes = Vote::where('creature_id', $creatures->vote);
+
+        return view('user.show', ['user' => $user, 'creatures' => $creatures]);
     }
 
     public function update(UpdateUserRequest $request, User $user): RedirectResponse {
         $data = $request->validated();
 
         if (Auth::attempt([
-            'name' => $user->name,
+            'email' => $user->email,
             'password' => $data['current_password']])
         ) {
             $user->forceFill([
