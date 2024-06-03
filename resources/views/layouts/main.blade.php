@@ -9,7 +9,7 @@
     @vite('resources/css/app.css')
 </head>
 <body class="bg-forest bg-no-repeat bg-cover">
-    <header class="text-3xl uppercase font-black font-times text-slate-900 bg-headerColor p-2 items-center h-24 inset-x-0 top-0 flex flex-row gap-16">
+    <header class="text-3xl uppercase font-black font-times text-slate-900 bg-headerColor/60 backdrop-blur-sm p-2 items-center h-24 inset-x-0 top-0 flex flex-row gap-16">
         
         <a class="text-black-100 bg-yellow-500 p-5 rounded-br-3xl rounded-tl-3xl">Thiria</a>
         <a class="{{ request()->routeIs('site.view_home') ? 'text-fifthColor  bg-firstColor' : 'text-firstColor bg-fourthColor' }} p-5 rounded-br-3xl rounded-tl-3xl" href="{{ route('site.view_home') }}">Home</a>

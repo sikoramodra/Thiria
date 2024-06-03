@@ -5,7 +5,7 @@
 @section('content')
 <div class="flex items-center justify-center" style="height: calc( 100vh - 6rem )">
     <div class="w-full max-w-md">
-        <div class="bg-firstColor shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="bg-firstColor/90 backdrop-blur-2xl shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <h2 class="text-center text-2xl font-bold mb-6 text-fifthColor">Login</h2>
             <form action="{{ route('user.login') }}" method="post">
                 @csrf

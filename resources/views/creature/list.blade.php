@@ -3,7 +3,7 @@
 @section('title', '')
 
 @section('content')
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 p-2 overflow-y-scroll" style="height: calc( 100vh - 6rem ); scrollbar-width:initial; scrollbar-color: #6C584C transparent;">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 p-2 overflow-y-scroll bg-firstColor/50 backdrop-blur-md" style="height: calc( 100vh - 6rem ); scrollbar-width:initial; scrollbar-color: #6C584C transparent;">
         @foreach ($creatures as $creature)
             <a href="{{ route('creature.view_show', ['creature' => $creature]) }}" class="p-8 h-auto rounded-lg shadow break-all bg-secondColor/55 backdrop-blur-3xl">
                 <h5 class="mb-2 text-center text-3xl font-times font-bold text-dark-100">{{ $creature->name }}</h5>

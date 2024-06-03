@@ -17,10 +17,10 @@
 @section('title', 'Edit')
 
 @section('content')
-<form action="{{ $action }}" method="post" class="m-24">
+<form action="{{ $action }}" method="post" class="bg-firstColor/50 backdrop-blur-md p-24" style="height: calc( 100vh - 6rem )">
     @csrf
 
-    <h3 class="text-xl font-bold">
+    <h3 class="text-4xl font-bold font-times">
         @if (! empty($creature))
             @method('PUT')
             Edit Creature
@@ -44,6 +44,6 @@
 
     <input type="hidden" name="user_id" value="{{ $user_id }}">
 
-    <button type="submit" class="mt-8 text-white bg-blue-500 hover:bg-blue-400 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-400">Submit</button>
+    <button type="submit" class="mt-8 bg-thirdColor hover:bg-fourthColor text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
 </form>
 @endsection
