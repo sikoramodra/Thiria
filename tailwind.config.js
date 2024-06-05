@@ -7,8 +7,25 @@ module.exports = {
     ],
     darkMode: 'class',
     theme: {
-        extend: {},
-        // colors: {},
+        extend: {
+            
+            fontFamily: {
+                'times': ['"Times New Roman"', 'serif'],
+              },
+
+            colors: {
+                headerColor: '#283618',
+                firstColor: '#F0EAD2',
+                secondColor: '#DDE5B6',
+                thirdColor: '#ADC178',
+                fourthColor: '#A98467',
+                fifthColor: '#6C584C',
+            },
+
+            backgroundImage: {
+                'forest': "url('/resources/image/bg-forest.jpg')",
+            }
+        },
     },
     plugins: [],
 }

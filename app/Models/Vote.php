@@ -32,6 +32,12 @@ class Vote extends Model {
     protected $table = 'vote';
     public $timestamps = false;
 
+    protected $fillable = [
+        'user_id',
+        'creature_id',
+        'vote',
+    ];
+
     public function user(): BelongsTo {
         return $this->belongsTo(User::class, 'user_id');
     }

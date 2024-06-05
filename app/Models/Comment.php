@@ -46,6 +46,13 @@ class Comment extends Model {
 
     protected $table = 'comment';
 
+    protected $fillable = [
+        'comment_id',
+        'user_id',
+        'creature_id',
+        'text',
+    ];
+
     public function user(): BelongsTo {
         return $this->belongsTo(User::class, 'user_id');
     }

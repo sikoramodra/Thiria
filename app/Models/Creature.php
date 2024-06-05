@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 /**
  *
@@ -46,6 +47,24 @@ class Creature extends Model {
     use HasFactory, SoftDeletes;
 
     protected $table = 'creature';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'description',
+        'statblock',
+        'user_id',
+    ];
+
+    protected function excerpt(): Attribute {
+        return Attribute::make(
+            get: fn () => substr($this->description, 0, 100) . "...",
+        );
+    }
 
     public function user(): BelongsTo {
         return $this->belongsTo(User::class, 'user_id');

@@ -9,15 +9,28 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class VoteController extends Controller {
-    public function add(AddVoteRequest $request): void {
+    public function add(AddVoteRequest $request) {
         $data = $request->validated();
-        $data['user_id'] = Auth::id();
+        $user_id = Auth::id();
+        $creature_id = $data['creature_id'];
 
-        $newVote = new Vote($data);
-        $newVote->save();
+        $existingVote = Vote::where('user_id', $user_id)
+                            ->where('creature_id', $creature_id)
+                            ->first();
+
+        if ($existingVote) {
+            $existingVote->update($data);
+
+        } else {
+            $data['user_id'] = $user_id;
+            $newVote = new Vote($data);
+            $newVote->save();
+        }
+    
+        return redirect()->back();
     }
 
-    public function delete(Vote $vote): void {
+    public function delete(Vote $vote) {
         try {
             Gate::authorize('own', $vote);
         } catch (AuthorizationException $e) {
@@ -25,5 +38,6 @@ class VoteController extends Controller {
         }
 
         $vote->delete();
+        return redirect()->back();
     }
 }
